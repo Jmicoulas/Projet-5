@@ -1,8 +1,8 @@
 fetch("http://localhost:3000/api/teddies")
   .then(response => response.json())
   .then (items =>{
-    console.log(items)
-    let main = document.getElementById('main');
+    console.log(items);
+    let main = document.getElementById("main");
     if(items.length > 0 ){
       document.getElementById("error").style.display = 'none';
     }
