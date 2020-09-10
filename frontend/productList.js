@@ -1,4 +1,4 @@
-fetch("http://localhost:3000/api/teddies")
+fetch("http://localhost:3000/api/teddies/")
   .then(response => response.json())
   .then (items =>{
     console.log(items);
@@ -16,6 +16,6 @@ fetch("http://localhost:3000/api/teddies")
                             <p>${item.price/100} euros</p>
                             <a href="product.html?id=${item._id}" class="btn btn-outline-danger">Voir les détails du produit</a>
                           </div>
-                        </div>`; // alt + 96 pour ``
-    })
+                        </div>` // alt + 96 pour ``
+    });
   })
