@@ -1,3 +1,7 @@
 body{
   background: #F3E9F1;
 }
+
+table,td,td{
+  border: 1px solid black;
+}
