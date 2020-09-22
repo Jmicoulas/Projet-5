@@ -10,10 +10,12 @@ userPanier.forEach((produit)=>{
     .then (product =>{
       
     arrayCreator() =>{
-      document.getElementById("basket_table").innerHTML = "<tr id='basketProduct'></tr>"
-      document.getElementById("basketProduct")
+      let tableRow = document.createElement("<tr></tr>");
+      
+      //document.getElementById("basket_table").innerHTML = "<tr id='basketProduct'></tr>"
+      //document.getElementById("basketProduct").innerHTML = ""
     }
     })
-  }
-} 
+  };
+};
 // faire les fonctions puis les integrer dans la boucle forEach
