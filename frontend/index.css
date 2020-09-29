@@ -1,7 +1,43 @@
-body{
-  background: #F3E9F1;
+html{
+height: 100%;
 }
 
-table,td,td{
+body{
+  background: #F3E9F1;
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 7em;
+}
+
+table,td,td,tbody,th{
   border: 1px solid black;
+  padding: 1em;
+  text-align: center;
+}
+
+table{
+  margin-left: 3rem;
+}
+
+caption{
+  caption-side: top;
+  text-align: center;
+}
+ 
+#form_Main{
+  margin-left: 3rem;
+  margin-top: 1rem;
+}
+
+footer{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.jumbotron{
+  background-color: white;
 }

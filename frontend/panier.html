@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="index.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script type="text/javascript" src="panier.js"></script>
 </head>
 <body>
   <nav class="col navbar navbar-light navbar-expand-lg">
@@ -16,73 +15,95 @@
     <div id="navbarContent" class="collapse navbar-collapse">
       <ul class="navbar-nav">
         <li class="nav-item active"><a class="nav-link" href="index.html">Accueil</a></li>
-        <li class="nav-item"><a class="nav-link" href="product__page.html">Panier</a></li>
+        <li class="nav-item"><a class="nav-link" href="panier.html">Panier</a></li>
       </ul>
     </div>
   </nav>
   <div id="main">
-    <table id="basket_table">
-      <tr>
-        <td>Nom du produit</td>
-        <td>Option du produit</td>
-        <td>Prix du produit</td>
-      </tr>
-    </table>
-    <form>
+    <div id="facture">
+      <table id="basket_table">
+        <caption>Facture de votre commande</caption>
+        <thead>
+          <tr>
+            <th>Nom du produit</th>
+            <th>Option du produit</th>
+            <th>Prix du produit</th>
+          </tr>
+        </thead>
+        <tbody id="basket_tablebody">
+        </tbody>
+        <tfoot id="basket_footer">
+        </tfoot>
+      </table>
+    </div>
+    <form id="form_Main">
+      <p>Vos coordonnés :</p>
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline1">Homme</label>
+        <label class="custom-control-label mb-3" for="customRadioInline1">Homme</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
         <label class="custom-control-label" for="customRadioInline2">Femme</label>
       </div>
-      </div>
-      <div class="form-row px-5">
+      <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputLastName">Nom de famille</label>
-          <input type="text" class="form-control" id="inputLastName" placeholder="Nom de famille">
+          <input type="text" class="form-control" id="inputLastName" placeholder="Nom de famille" required>
         </div>
         <div class="form-group col-md-6">
           <label for="inputFirstName">Prénom</label>
-          <input type="text" class="form-control" id="inputFirstName" placeholder="Prénom">
+          <input type="text" class="form-control" id="inputFirstName" placeholder="Prénom" required>
         </div>
       </div>
-      <div class="form-group px-5">
-        <label for="inputAddress">Adresse</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 rue des coquelicots">
+      <div class="form-group">
+        <label for="inputAdress">Adresse</label>
+        <input type="text" class="form-control" id="inputAdress" placeholder="..." required>
       </div>
-      <div class="form-group px-5">
-        <label for="inputAddress2">Complément d'adresse</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Appartement, étage, batiment...">
+      <div class="form-group">
+        <label for="inputAdressComp">Complément d'adresse</label>
+        <input type="text" class="form-control" id="inputAdressComp" placeholder="Appartement, étage, batiment...">
       </div>
-      <div class="form-row px-5">
-        <div class="form-group col-md-6">
+      <div class="form-row">
+        <div class="form-group col-md-4">
           <label for="inputCity">Ville</label>
-          <input type="text" class="form-control" id="inputCity">
+          <input type="text" class="form-control" id="inputCity" placeholder="..." required>
         </div>
-        <div class="form-group col-md-4 px-5">
-          <label for="inputState">State</label>
-          <select id="inputState" class="form-control">
+        <div class="form-group col-md-4">
+          <label for="inputCountry">Pays</label>
+          <select id="inputCountry" class="form-control">
             <option selected>France Métropolitaine</option>
             <option>DOM-TOM</option>
           </select>
         </div>
-        <div class="form-group col-md-2 px-5">
-          <label for="inputZip">Code Postal</label>
-          <input type="text" class="form-control" id="inputZip">
+        <div class="form-group col-md-4">
+          <label for="inputMail">Adresse email</label>
+          <input type="email" class="form-control" id="inputMail" placeholder="champ obligatoire" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary mx-5">Valider la commander</button>
+      <a id="validationBtn" class="btn btn-primary" role="button">Valider votre commande</a>
     </form>
-
   </div>
+  <footer class="text-center font-weight-bold">
+    <div class="container p-3 pt-5">
+      <div class="row">
+        <div class="col">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">À propos</a></li>
+            <li class="list-inline-item">&middot;</li>
+            <li class="list-inline-item"><a href="#">Vie privée</a></li>
+            <li class="list-inline-item">&middot;</li>
+            <li class="list-inline-item"><a href="#">Conditions d'utilisations</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-
+  <script type="text/javascript" src="panier.js"></script>
   <!-- JS, Popper.js, and jQuery for bootstrap -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
 </body>
 </html>

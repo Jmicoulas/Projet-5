@@ -22,3 +22,7 @@ fetch("http://localhost:3000/api/teddies/")
     });
 
   })
+  function displayElement () {
+    
+  }
+  //créer une fonction pour displayElement
