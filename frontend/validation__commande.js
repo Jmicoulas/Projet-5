@@ -1,7 +1,9 @@
-let userCoord = localStorage.getItem("userCoord") ? JSON.parse(localStorage.getItem("userCoord")) : [];
+fetch('http://localhost:3000/api/teddies/order/', {
+        method: "POST",
+        body: JSON.stringify(products, contact),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json()) 
+        .then(json => console.log(json));
 
-if (userCoord.length > 0) {
-    fetch("http://localhost:3000/api/teddies/")
-    document.getElementById("error").style.display = "none";
-    document.getElementById("order")
-}
+

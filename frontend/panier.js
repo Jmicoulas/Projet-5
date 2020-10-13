@@ -1,5 +1,6 @@
 let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.getItem("userPanier")) : [];
 let userCoord = localStorage.getItem("userCoord") ? JSON.parse(localStorage.getItem("userCoord")) : [];
+let products = {"product:_id" : userPanier.productId}
 
 if (userPanier.length > 0){
 userPanier.forEach((produit,index)=>{
@@ -7,28 +8,31 @@ userPanier.forEach((produit,index)=>{
   fetch("http://localhost:3000/api/teddies/" + produit.productId) // le productId n'est récup que ligne 6
     .then(response => response.json())
     .then (teddie =>{
+
       teddie.option = produit.option;
       produit.price = teddie.price;
       console.log(teddie);
       tableCreator(teddie, index);
+     
     })
-  })
+  })      
   sumTable(userPanier);
   clearPanier();
-}else{
+} else{
   document.getElementById("main").innerHTML ='Votre Panier est vide pour le moment.'
   document.getElementById("main").style.textAlign = "center";
   document.getElementById("main").style.fontSize = "2rem";
 }
   // Validation de la commande
-  let contact
   let inputValidation = document.getElementById("validationBtn");
   inputValidation.addEventListener("click", () =>{
-  checkInput();
+  let contact = checkInput();
   if (contact != null){
     document.getElementById("validationBtn").setAttribute("href","validation__commande.html");
   }
   });
+
+
 
 // creation du tableau pour chaque element du userPanier
 function tableCreator (element, index) {
@@ -48,18 +52,18 @@ function sumTable (panier) {
   panier.forEach(element => {
     total = element.productPrice + total;
   });
-  console.log(total);
+  console.log(total /100 + "€");
   total = total /100;
   document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : '+total+'€</td>';
   // le retour null de la fonction était du à la position au départ du script dans le HTML
 }
 
 // creation d'un bouton pour vider le userPanier et refresh
-function clearPanier (element){
+function clearPanier (){
   //mettre au panier au click de l'utilisateur
   let inputClear = document.getElementById("facture");
   inputClear.innerHTML += '<div class="btn btn-primary mx-5 my-3" id="clear_basket">Vider votre panier</div>';
-  inputClear.addEventListener("click", () => {
+  document.getElementById("clear_basket").addEventListener("click", () => {
   localStorage.clear();
   document.location.reload(true)
   });
@@ -132,30 +136,33 @@ function checkInput  (){
       //Si un des champs n'est pas bon => message d'alert avec la raison
       if(checkMessage != ""){
         alert("Il est nécessaire de :" + "\n" + checkMessage);
-        return contact;
+        return null
       }
 
       //Si tout est ok construction de l'objet contact => a revoir
       else{
-        contact = {
+        let contact = {
           firstName : formNom,
           lastName : formPrenom,
           address : formAdresse,
-          compaddress : formAdresseComp,
           city : formVille,
           email : formMail
         };        
         //push des coordonnés dans le localStorage
         userCoord.length = 0;
-        userCoord.push({contact});
+        userCoord.push({contact}); 
         localStorage.setItem("userCoord", JSON.stringify(userCoord));
+        fetch('http://localhost:3000/api/teddies/order/', {
+        method: "POST",
+        body: JSON.stringify(products, contact),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json()) 
+        .then(json => console.log(json));
         return contact;
       };
   };
 
-
-
-//push les infos du formulaire
-//récup ces infos dans validation__commande.js
+// utiliser la methode POST pour envoyer le array contact et le array products avec le product_:id
 //utiliser les console.log pour décomposer les erreurs
 // faire les fonctions puis les integrer dans la boucle forEach
