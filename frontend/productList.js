@@ -1,3 +1,4 @@
+// fetch de l'API du produit souhaité, les ourson en peluche dans le cas présents
 fetch("http://localhost:3000/api/teddies/")
   .then(response => response.json())
   .then (items =>{
@@ -14,7 +15,7 @@ fetch("http://localhost:3000/api/teddies/")
   })
   // afficher chaque produit dans des balises cards
   function displayElement (item) {
-    let itemHtml = `<div class="card w-75 h-75 my-4 pt-5 mx-auto">
+    let itemHtml = `<div class="card w-50 h-75 my-4 pt-5 mx-auto">
                           <div>
                             <img src="${item.imageUrl}" class="card-img-top mx-auto d-block" alt="image du produit">
                           </div>

@@ -23,9 +23,7 @@ fetch("http://localhost:3000/api/teddies/" + productId)
       optionProduit.value = produit;
       document.getElementById("optionSelect").appendChild(optionProduit);
     });
-
     addPanier(item);
-
   })
   .catch(erreur => {
     document.getElementById(main).innerHTML = "<h2>Une erreur est survenue</h2>";
@@ -40,7 +38,7 @@ fetch("http://localhost:3000/api/teddies/" + productId)
     //récupération puis push du produit dans le panier et retour au localStorage
     userPanier.push({productPrice : product.price, productId : product._id, option : selectedOption});
     localStorage.setItem("userPanier", JSON.stringify(userPanier));
-    console.log("Administration : le produit a été ajouté au panier")
+    console.log("Admin : le produit a été ajouté au panier")
     alert("Vous avez ajouté ce produit dans votre panier")
     });
 

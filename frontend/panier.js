@@ -1,24 +1,38 @@
+//récupération du userPanier dans le localStorage
 let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.getItem("userPanier")) : [];
-let userCoord = localStorage.getItem("userCoord") ? JSON.parse(localStorage.getItem("userCoord")) : [];
-let products = {"product:_id" : userPanier.productId}
 
+//déclaration du array product pour le fetch POST
+let products = [];
+userPanier.forEach (produit => {
+  products.push(produit.productId);
+})
+
+//déclaration des variables pour contact
+let formNom;
+let formPrenom;
+let formMail;
+let formAdresse;
+let formAdresseComp;
+let formVille;
+
+//fetch des données nécessaires
 if (userPanier.length > 0){
 userPanier.forEach((produit,index)=>{
   console.log(produit)
   fetch("http://localhost:3000/api/teddies/" + produit.productId) // le productId n'est récup que ligne 6
     .then(response => response.json())
     .then (teddie =>{
-
       teddie.option = produit.option;
       produit.price = teddie.price;
       console.log(teddie);
       tableCreator(teddie, index);
-     
     })
   })      
   sumTable(userPanier);
   clearPanier();
-} else{
+}
+// Page si panier vide 
+else{
   document.getElementById("main").innerHTML ='Votre Panier est vide pour le moment.'
   document.getElementById("main").style.textAlign = "center";
   document.getElementById("main").style.fontSize = "2rem";
@@ -26,13 +40,29 @@ userPanier.forEach((produit,index)=>{
   // Validation de la commande
   let inputValidation = document.getElementById("validationBtn");
   inputValidation.addEventListener("click", () =>{
-  let contact = checkInput();
-  if (contact != null){
-    document.getElementById("validationBtn").setAttribute("href","validation__commande.html");
-  }
+  let isOkay = checkInput();
+  if (isOkay){
+    let contact = {
+      firstName : formNom,
+      lastName : formPrenom,
+      address : formAdresse,
+      city : formVille,
+      email : formMail
+    };        
+    //push des coordonnés dans le localStorage
+    fetch('http://localhost:3000/api/teddies/order/', {
+    method: "POST",
+    body: JSON.stringify({products, contact}),
+    headers: {"Content-type": "application/json; charset=UTF-8"}
+    })
+    .then(response => response.json()) 
+    .then(json =>{
+      console.log(json);
+      sessionStorage.setItem('order',JSON.stringify(json));
+      window.location.replace("validation__commande.html");
+    });
+  } 
   });
-
-
 
 // creation du tableau pour chaque element du userPanier
 function tableCreator (element, index) {
@@ -54,6 +84,7 @@ function sumTable (panier) {
   });
   console.log(total /100 + "€");
   total = total /100;
+  sessionStorage.setItem('total',total);
   document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : '+total+'€</td>';
   // le retour null de la fonction était du à la position au départ du script dans le HTML
 }
@@ -65,7 +96,7 @@ function clearPanier (){
   inputClear.innerHTML += '<div class="btn btn-primary mx-5 my-3" id="clear_basket">Vider votre panier</div>';
   document.getElementById("clear_basket").addEventListener("click", () => {
   localStorage.clear();
-  document.location.reload(true)
+  document.location.reload(true);
   });
 }
 
@@ -80,12 +111,12 @@ function checkInput  (){
   let checkMail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/y;
   let checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
 
-  let formNom = document.getElementById("inputLastName").value;
-  let formPrenom = document.getElementById("inputFirstName").value;
-  let formMail = document.getElementById("inputMail").value;
-  let formAdresse = document.getElementById("inputAdress").value;
-  let formAdresseComp = document.getElementById("inputAdressComp").value;
-  let formVille = document.getElementById("inputCity").value;
+  formNom = document.getElementById("inputLastName").value;
+  formPrenom = document.getElementById("inputFirstName").value;
+  formMail = document.getElementById("inputMail").value;
+  formAdresse = document.getElementById("inputAdress").value;
+  formAdresseComp = document.getElementById("inputAdressComp").value;
+  formVille = document.getElementById("inputCity").value;
 
   //message fin de controle
   let checkMessage = "";
@@ -141,25 +172,7 @@ function checkInput  (){
 
       //Si tout est ok construction de l'objet contact => a revoir
       else{
-        let contact = {
-          firstName : formNom,
-          lastName : formPrenom,
-          address : formAdresse,
-          city : formVille,
-          email : formMail
-        };        
-        //push des coordonnés dans le localStorage
-        userCoord.length = 0;
-        userCoord.push({contact}); 
-        localStorage.setItem("userCoord", JSON.stringify(userCoord));
-        fetch('http://localhost:3000/api/teddies/order/', {
-        method: "POST",
-        body: JSON.stringify(products, contact),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
-        })
-        .then(response => response.json()) 
-        .then(json => console.log(json));
-        return contact;
+        return true;
       };
   };
 
