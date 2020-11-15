@@ -19,7 +19,7 @@
       </ul>
     </div>
   </nav>
-  <div id="main">
+  <div id="main" class="main__Basket">
     <div id="facture">
       <table id="basket_table">
         <caption>Facture de votre commande</caption>
@@ -47,36 +47,40 @@
         <label class="custom-control-label" for="customRadioInline2">Femme</label>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
           <label for="inputLastName">Nom de famille</label>
           <input type="text" class="form-control" id="inputLastName" placeholder="Nom de famille" required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
           <label for="inputFirstName">Prénom</label>
           <input type="text" class="form-control" id="inputFirstName" placeholder="Prénom" required>
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputAdress">Adresse</label>
-        <input type="text" class="form-control" id="inputAdress" placeholder="..." required>
-      </div>
-      <div class="form-group">
-        <label for="inputAdressComp">Complément d'adresse</label>
-        <input type="text" class="form-control" id="inputAdressComp" placeholder="Appartement, étage, batiment...">
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputAdress">Adresse</label>
+          <input type="text" class="form-control" id="inputAdress" placeholder="..." required>
+        </div>
+        <div class="form-group col-2">
+          <label for="inputAdressComp">Complément d'adresse</label>
+          <input type="text" class="form-control" id="inputAdressComp" placeholder="Appartement, étage, batiment...">
+        </div> 
       </div>
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
           <label for="inputCity">Ville</label>
           <input type="text" class="form-control" id="inputCity" placeholder="..." required>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
           <label for="inputCountry">Pays</label>
           <select id="inputCountry" class="form-control">
             <option selected>France Métropolitaine</option>
             <option>DOM-TOM</option>
           </select>
         </div>
-        <div class="form-group col-md-4">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
           <label for="inputMail">Adresse email</label>
           <input type="email" class="form-control" id="inputMail" placeholder="champ obligatoire" required>
         </div>

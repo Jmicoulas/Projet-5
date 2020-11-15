@@ -17,7 +17,7 @@ productOrder.forEach(element =>{
 
 // afficher chaque produit de la commande validé dans des balises cards
 function displayElement (element) {
-  let elementHtml = `<div class="card">
+  let elementHtml = `<div class="card" id="card__Confirm">
                         <div>
                           <img src="${element.imageUrl}" class="card-img-top" alt="image du produit">
                         </div>
@@ -36,10 +36,4 @@ document.getElementById("adressOrder").innerHTML = contactOrder.address;
 document.getElementById("cityOrder").innerHTML = contactOrder.city;
 document.getElementById("emailOrder").innerHTML = contactOrder.email;
 
-
-
-// vider le localstorage à la validation de la commande OK
-//commenter le code
 //preparer sur excel le plan de test unitaire
-//finir cette page OK
-//finir la déco
