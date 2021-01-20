@@ -24,10 +24,10 @@ userPanier.forEach((produit,index)=>{
     .then (teddie =>{
       teddie.option = produit.option;
       produit.price = teddie.price;
-      console.log(teddie);
+      console.log(teddie);    
       tableCreator(teddie, index);
     })
-  })      
+  });      
   sumTable(userPanier);
   clearPanier();
 }
@@ -36,7 +36,15 @@ else{
   document.getElementById("main").innerHTML ='Votre Panier est vide pour le moment.'
   document.getElementById("main").style.textAlign = "center";
   document.getElementById("main").style.fontSize = "2rem";
+userPanier.forEach((produit)=>{
+console.log(produit);
+fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est récup que ligne 6
+  .then(response => response.json())
+  .then (product =>{
+  })
+});
 }
+
   // Validation de la commande
   let inputValidation = document.getElementById("validationBtn");
   inputValidation.addEventListener("click", () =>{
@@ -66,6 +74,7 @@ else{
 
 // creation du tableau pour chaque element du userPanier
 function tableCreator (element, index) {
+  
   document.getElementById("basket_tablebody").innerHTML += "<tr id='basketProduct"+index+"'></tr>";
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.name +"</td>";
   if (element.option == 0) {
@@ -74,7 +83,7 @@ function tableCreator (element, index) {
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.option +"</td>";
   }
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.price/100+"€</td>";// += pour rajouter
-}
+};
 
 // creation de la colonne Total
 function sumTable (panier) {
@@ -87,7 +96,7 @@ function sumTable (panier) {
   sessionStorage.setItem('total',total);
   document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : '+total+'€</td>';
   // le retour null de la fonction était du à la position au départ du script dans le HTML
-}
+};
 
 // creation d'un bouton pour vider le userPanier et refresh
 function clearPanier (){
@@ -98,7 +107,7 @@ function clearPanier (){
   localStorage.clear();
   document.location.reload(true);
   });
-}
+};
 
 //vérifie les inputs du formulaire
 function checkInput  (){
@@ -179,3 +188,5 @@ function checkInput  (){
 // utiliser la methode POST pour envoyer le array contact et le array products avec le product_:id
 //utiliser les console.log pour décomposer les erreurs
 // faire les fonctions puis les integrer dans la boucle forEach
+ 
+// faire les fonctions puis les integrer dans le boucle forEach
