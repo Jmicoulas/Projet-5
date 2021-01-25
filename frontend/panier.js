@@ -33,7 +33,7 @@ userPanier.forEach((produit,index)=>{
 }
 // Page si panier vide 
 else{
-  document.getElementById("main").innerHTML ='Votre Panier est vide pour le moment.'
+  document.getElementById("main").innerHTML ='Votre panier est vide pour le moment.'
   document.getElementById("main").style.textAlign = "center";
   document.getElementById("main").style.fontSize = "2rem";
 userPanier.forEach((produit)=>{
