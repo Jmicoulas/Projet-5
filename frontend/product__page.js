@@ -9,7 +9,6 @@ fetch("http://localhost:3000/api/teddies/" + productId)
     console.log(item); // Pour s'assurer que l'on récupère bien le bon produit choisi sur la page précédent
 
     //intégration des infos du produit 
-    // à refactorer dans une fonction
     document.getElementById("imgProduct").setAttribute("src", item.imageUrl);
     document.getElementById("imgProduct").setAttribute("class", "img-fluid");
     document.getElementById("nameProduct").innerHTML = item.name;
