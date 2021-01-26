@@ -47,30 +47,33 @@ fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est r�
 
   // Validation de la commande
   let inputValidation = document.getElementById("validationBtn");
-  inputValidation.addEventListener("click", () =>{
-  let isOkay = checkInput();
-  if (isOkay){
-    let contact = {
-      firstName : formNom,
-      lastName : formPrenom,
-      address : formAdresse,
-      city : formVille,
-      email : formMail
-    };        
-    //push des coordonnés dans le localStorage
-    fetch('http://localhost:3000/api/teddies/order/', {
-    method: "POST",
-    body: JSON.stringify({products, contact}),
-    headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
-    .then(response => response.json()) 
-    .then(json =>{
-      console.log(json);
-      sessionStorage.setItem('order',JSON.stringify(json));
-      window.location.replace("validation__commande.html");
+  if (inputValidation){ // check si le bouton de validation est bien présent et donc ne renvoi pas null
+    inputValidation.addEventListener("click", () =>{
+      let isOkay = checkInput();
+      if (isOkay){
+        let contact = {
+          firstName : formNom,
+          lastName : formPrenom,
+          address : formAdresse,
+          city : formVille,
+          email : formMail
+        };     
+        console.clear();   
+        //push des coordonnés dans le localStorage
+        fetch('http://localhost:3000/api/teddies/order/', {
+        method: "POST",
+        body: JSON.stringify({products, contact}),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json()) 
+        .then(json =>{
+          console.log(json);
+          sessionStorage.setItem('order',JSON.stringify(json));
+          window.location.replace("validation__commande.html");
+        });
+      } 
     });
-  } 
-  });
+  }
 
 // creation du tableau pour chaque element du userPanier
 function tableCreator (element, index) {
@@ -132,50 +135,62 @@ function checkInput  (){
 
     //tests des différents input du formulaire
       //Test du nom => aucun chiffre ou charactère spécial permis
-      if(checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true || formNom == ""){
-        checkMessage = "Vérifier/renseigner votre nom";
-      }else{
+      if(checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true){
+        checkMessage = "Nom de famille invalide, vérifier votre nom de famille";
+      }else if(formNom == ""){
+        checkMessage = "Renseigner votre nom de famille afin de valider la commande";
+      }
+      else{
         console.log("Administration : Nom ok");
       };
 
-      //Test du nom => aucun chiffre ou charactère spécial permis
-      if(checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true || formPrenom == ""){
-        checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre prénom";
-      }else{
-        console.log("Administration : Prénom ok");
-      };
-
-      //Test du mail selon le regex de la source L256
-      if(checkMail.test(formMail) == false){
-        checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre email";
-      }else{
-        console.log("Administration : Adresse mail ok");
+      //Test du prenom => aucun chiffre ou charactère spécial permis
+      if(checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true){
+        checkMessage = checkMessage + "\n" + "Prénom invalide, vérifier votre prénom";
+      }else if(formPrenom == ""){
+        checkMessage = checkMessage + "\n" + "Renseigner votre prénom afin de valider la commande";
+      }
+      else{
+        console.log("Admin : Prénom ok");
       };
 
       //Test de l'adresse => l'adresse ne contient pas obligatoirement un numéro de rue mais n'a pas de characteres spéciaux
-      if(checkSpecialCharacter.test(formAdresse) == true || formAdresse == ""){
-        checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre adresse";
+      if(checkSpecialCharacter.test(formAdresse) == true){
+        checkMessage = checkMessage + "\n" + "adresse invalide, vérifier votre adresse";
+      }else if(formAdresse ==""){
+        checkMessage = checkMessage + "\n" + "Renseigner votre adresse afin de valider la commande";
       }else{
-        console.log("Administration : Adresse ok");
+        console.log("Admin : Adresse ok");
       };
 
       //Test du complément d'adresse => le complement peut être vide mais n'a pas de characteres spéciaux
-      if(checkSpecialCharacter.test(formAdresseComp) == true){
-        checkMessage = checkMessage + "\n" + "Vérifier votre complément d'adresse";
+      if (formAdresseComp ==""){
       }else{
-        console.log("Administration : Adresse ok");
+        console.log("Admin : Complément d'adresse ok");
       };
       
       //Test de la ville => aucune ville en France ne comporte de chiffre ou charactères spéciaux
-      if(checkSpecialCharacter.test(formVille) == true && checkNumber.test(formVille) == true || formVille == ""){
-        checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre ville"
+      if(checkSpecialCharacter.test(formVille) == true || checkNumber.test(formVille) == true){
+        checkMessage = checkMessage + "\n" + "Ville invalide, vérifier votre ville"
+      }else if(formVille == ""){
+        checkMessage = checkMessage + "\n" + "Renseigner votre ville afin de valider la commande"       
       }else{
-        console.log("Administration : Ville ok")
+        console.log("Admin : Ville ok")
+      };
+
+      //Test du mail selon le regex de la source L256
+      
+      if(formMail ==""){
+        checkMessage = checkMessage + "\n" + "Renseigner votre adresse mail afin de valider la commande";
+      }else if(checkMail.test(formMail) == false){
+        checkMessage = checkMessage + "\n" + "Adresse mail invalide, vérifier votre adresse mail";
+      }else{
+        console.log("Admin: Adresse mail ok");
       };
 
       //Si un des champs n'est pas bon => message d'alert avec la raison
       if(checkMessage != ""){
-        alert("Il est nécessaire de :" + "\n" + checkMessage);
+        alert("Attention :" + "\n" + checkMessage);
         return null
       }
 
