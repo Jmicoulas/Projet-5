@@ -25,7 +25,6 @@ userPanier.forEach((produit,index)=>{
       tableCreator(teddie, index);
     })
     .catch(error =>{//Si le panier est vide 
-      console.log('erreur');
       document.getElementById("main").innerHTML ='<p>Votre panier est vide pour le moment.</p>';
       document.getElementById("main").style.textAlign = "center";
       document.getElementById("main").style.fontSize = "2rem";
@@ -118,42 +117,33 @@ function checkInput  (){
     //tests des différents input du formulaire
       //Test du nom => aucun chiffre ou charactère spécial permis
       if(checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true){
-        checkMessage = "Nom de famille invalide, vérifier votre nom de famille";
+        checkMessage += "\n" + "Nom de famille invalide, vérifier votre nom de famille";
       }else if(formNom == ""){
-        checkMessage = "Renseigner votre nom de famille afin de valider la commande";
+        checkMessage += "\n" + "Renseigner votre nom de famille afin de valider la commande";
       }
-      else{
-        console.log("Administration : Nom ok");
-      };
 
       //Test du prenom => aucun chiffre ou charactère spécial permis
       if(checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true){
-        checkMessage = checkMessage + "\n" + "Prénom invalide, vérifier votre prénom";
+        checkMessage += "\n" + "Prénom invalide, vérifier votre prénom";
       }else if(formPrenom == ""){
-        checkMessage = checkMessage + "\n" + "Renseigner votre prénom afin de valider la commande";
+        checkMessage += "\n" + "Renseigner votre prénom afin de valider la commande";
       }
-      else{
-        console.log("Admin : Prénom ok");
-      };
 
       //Test de l'adresse => l'adresse ne contient pas obligatoirement un numéro de rue mais n'a pas de characteres spéciaux
       if(checkSpecialCharacter.test(formAdresse) == true){
-        checkMessage = checkMessage + "\n" + "adresse invalide, vérifier votre adresse";
+        checkMessage += "\n" + "adresse invalide, vérifier votre adresse";
       }else if(formAdresse ==""){
-        checkMessage = checkMessage + "\n" + "Renseigner votre adresse afin de valider la commande";
-      }else{
-        console.log("Admin : Adresse ok");
-      };
+        checkMessage += "\n" + "Renseigner votre adresse afin de valider la commande";
+      }
 
       //Test du complément d'adresse => le complement peut être vide mais n'a pas de characteres spéciaux
-      if (formAdresseComp ==""){
-      }else{
-        console.log("Admin : Complément d'adresse ok");
-      };
+      if (checkSpecialCharacter.test(formAdresseComp) == true){
+        checkMessage += "\n" + "Complément d'adresse invalide, vérifier votre complément d'adresse" 
+      }
       
       //Test de la ville => aucune ville en France ne comporte de chiffre ou charactères spéciaux
       if(checkSpecialCharacter.test(formVille) == true || checkNumber.test(formVille) == true){
-        checkMessage = checkMessage + "\n" + "Ville invalide, vérifier votre ville"
+        checkMessage += "\n" + "Ville invalide, vérifier votre ville"
       }else if(formVille == ""){
         checkMessage += "\n" + "Renseigner votre ville afin de valider la commande"       
       }else{
@@ -161,11 +151,10 @@ function checkInput  (){
       };
 
       //Test du mail selon le regex de la source L256
-      
       if(formMail ==""){
-        checkMessage = checkMessage + "\n" + "Renseigner votre adresse mail afin de valider la commande";
+        checkMessage += "\n" + "Renseigner votre adresse mail afin de valider la commande";
       }else if(checkMail.test(formMail) == false){
-        checkMessage = checkMessage + "\n" + "Adresse mail invalide, vérifier votre adresse mail";
+        checkMessage += "\n" + "Adresse mail invalide, vérifier votre adresse mail";
       }else{
         console.log("Admin: Adresse mail ok");
       };

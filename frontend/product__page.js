@@ -32,9 +32,8 @@ fetch("http://localhost:3000/api/teddies/" + productId)
     inputBuy.addEventListener("click", () => {
 
     let selectedOption = document.getElementById("optionSelect").value;
-    // if value == Faites votre choix
+    // si le user n'a pas choisi d'option -> Alerte pour qu'il en choisisse une
     if(selectedOption==""){
-    // alerte
     alert("Pensez à selectionner votre option");
     }else{
       //récupération puis push du produit dans le panier et retour au localStorage
