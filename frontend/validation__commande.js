@@ -1,15 +1,12 @@
+// on vide le localStorage un fois la commande validé
 localStorage.clear();
 let userOrder = sessionStorage.getItem("order") ? JSON.parse(sessionStorage.getItem("order")) : [];
 let userTotal = sessionStorage.getItem("total") ? JSON.parse(sessionStorage.getItem("total")) : [];
-console.log(userOrder);
-console.log("Admin : Total = " +userTotal+ "€");
 
 document.getElementById("orderNmb").innerHTML = userOrder.orderId;
 document.getElementById("orderTotal").innerHTML = userTotal;
 
 let productOrder = userOrder.products;
-if (productOrder.length > 0){
-document.getElementById("error").style.display = "none";
 productOrder.forEach(element =>{
     let elementHtml = displayElement(element);
     document.getElementById("cardOrder").innerHTML += elementHtml;
@@ -27,8 +24,9 @@ function displayElement (element) {
                         </div>
                     </div>`
                     return elementHtml}
-}
 
+
+// Résumé des infos de contact de l'utlisateur
 let contactOrder = userOrder.contact;
 document.getElementById("lastNameOrder").innerHTML = contactOrder.lastName;
 document.getElementById("firstNameOrder").innerHTML = contactOrder.firstName;

@@ -6,8 +6,6 @@ let productId = urlParams.get('id');
 fetch("http://localhost:3000/api/teddies/" + productId)
   .then(response => response.json())
   .then (item =>{
-    console.log(item); // Pour s'assurer que l'on récupère bien le bon produit choisi sur la page précédent
-
     //intégration des infos du produit 
     document.getElementById("imgProduct").setAttribute("src", item.imageUrl);
     document.getElementById("imgProduct").setAttribute("class", "img-fluid");
@@ -39,17 +37,12 @@ fetch("http://localhost:3000/api/teddies/" + productId)
     // alerte
     alert("Pensez à selectionner votre option");
     }else{
-
-    
-      console.log(selectedOption);
       //récupération puis push du produit dans le panier et retour au localStorage
       userPanier.push({productPrice : product.price, productId : product._id, option : selectedOption});
       localStorage.setItem("userPanier", JSON.stringify(userPanier));
-      console.log("Admin : le produit a été ajouté au panier");
       alert("Vous avez ajouté ce produit dans votre panier");
     }
     });
-
   };
 
   

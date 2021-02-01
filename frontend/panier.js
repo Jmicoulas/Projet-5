@@ -16,32 +16,23 @@ let formAdresseComp;
 let formVille;
 
 //fetch des données nécessaires
-if (userPanier.length > 0){
 userPanier.forEach((produit,index)=>{
-  console.log(produit)
   fetch("http://localhost:3000/api/teddies/" + produit.productId) // le productId n'est récup que ligne 6
     .then(response => response.json())
     .then (teddie =>{
       teddie.option = produit.option;
-      produit.price = teddie.price;
-      console.log(teddie);    
+      produit.price = teddie.price; 
       tableCreator(teddie, index);
     })
+    .catch(error =>{//Si le panier est vide 
+      console.log('erreur');
+      document.getElementById("main").innerHTML ='<p>Votre panier est vide pour le moment.</p>';
+      document.getElementById("main").style.textAlign = "center";
+      document.getElementById("main").style.fontSize = "2rem";
+    });
   });      
   sumTable(userPanier);
   clearPanier();
-}
-// Page si panier vide 
-else{
-  document.getElementById("main").innerHTML ='Votre panier est vide pour le moment.'
-  document.getElementById("main").style.textAlign = "center";
-  document.getElementById("main").style.fontSize = "2rem";
-userPanier.forEach((produit)=>{
-console.log(produit);
-fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est récup que ligne 6
-  .then(response => response.json())
-});
-}
 
   // Validation de la commande
   let inputValidation = document.getElementById("validationBtn");
@@ -55,8 +46,7 @@ fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est r�
           address : formAdresse,
           city : formVille,
           email : formMail
-        };     
-        console.clear();   
+        };       
         //push des coordonnés dans le localStorage
         fetch('http://localhost:3000/api/teddies/order/', {
         method: "POST",
@@ -65,7 +55,6 @@ fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est r�
         })
         .then(response => response.json()) 
         .then(json =>{
-          console.log(json);
           sessionStorage.setItem('order',JSON.stringify(json));
           window.location.replace("validation__commande.html");
         });
@@ -78,12 +67,7 @@ function tableCreator (element, index) {
   
   document.getElementById("basket_tablebody").innerHTML += "<tr id='basketProduct"+index+"'></tr>";
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.name +"</td>";
-  //DONE : 
-  //if (element.option == 0) { A ENLEVER
-    //document.getElementById("basketProduct"+index).innerHTML += "<td>Aucune option choisi</td>";
-  }else{
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.option +"</td>";
-  }
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.price/100+"€</td>";// += pour rajouter
 };
 
@@ -93,7 +77,6 @@ function sumTable (panier) {
   panier.forEach(element => {
     total = element.productPrice + total;
   });
-  console.log(total /100 + "€");
   total = total /100;
   sessionStorage.setItem('total',total);
   document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : '+total+'€</td>';
@@ -198,9 +181,3 @@ function checkInput  (){
         return true;
       };
   };
-
-// utiliser la methode POST pour envoyer le array contact et le array products avec le product_:id
-//utiliser les console.log pour décomposer les erreurs
-// faire les fonctions puis les integrer dans la boucle forEach
- 
-// faire les fonctions puis les integrer dans le boucle forEach

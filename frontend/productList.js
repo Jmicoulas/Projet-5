@@ -2,7 +2,6 @@
 fetch("http://localhost:3000/api/teddies/")
   .then(response => response.json())
   .then (items =>{
-    console.log(items);
     let main = document.getElementById("main");
     items.forEach(item =>{
       let itemHtml = displayElement(item);
