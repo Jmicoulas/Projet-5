@@ -5,7 +5,7 @@ let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.ge
 let products = [];
 userPanier.forEach (produit => {
   products.push(produit.productId);
-})
+});
 
 //déclaration des variables pour contact
 let formNom;
@@ -40,8 +40,6 @@ userPanier.forEach((produit)=>{
 console.log(produit);
 fetch("http://localhost:3000/api/teddies/" + productId) // le productId n'est récup que ligne 6
   .then(response => response.json())
-  .then (product =>{
-  })
 });
 }
 
@@ -80,8 +78,9 @@ function tableCreator (element, index) {
   
   document.getElementById("basket_tablebody").innerHTML += "<tr id='basketProduct"+index+"'></tr>";
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.name +"</td>";
-  if (element.option == 0) {
-    document.getElementById("basketProduct"+index).innerHTML += "<td>Aucune option choisi</td>";
+  //DONE : 
+  //if (element.option == 0) { A ENLEVER
+    //document.getElementById("basketProduct"+index).innerHTML += "<td>Aucune option choisi</td>";
   }else{
   document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.option +"</td>";
   }
@@ -173,7 +172,7 @@ function checkInput  (){
       if(checkSpecialCharacter.test(formVille) == true || checkNumber.test(formVille) == true){
         checkMessage = checkMessage + "\n" + "Ville invalide, vérifier votre ville"
       }else if(formVille == ""){
-        checkMessage = checkMessage + "\n" + "Renseigner votre ville afin de valider la commande"       
+        checkMessage += "\n" + "Renseigner votre ville afin de valider la commande"       
       }else{
         console.log("Admin : Ville ok")
       };
