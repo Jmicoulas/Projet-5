@@ -35,5 +35,3 @@ document.getElementById("firstNameOrder").innerHTML = contactOrder.firstName;
 document.getElementById("adressOrder").innerHTML = contactOrder.address;
 document.getElementById("cityOrder").innerHTML = contactOrder.city;
 document.getElementById("emailOrder").innerHTML = contactOrder.email;
-
-//preparer sur excel le plan de test unitaire

@@ -4,15 +4,15 @@ fetch("http://localhost:3000/api/teddies/")
   .then (items =>{
     console.log(items);
     let main = document.getElementById("main");
-    if(items.length > 0 ){
-      document.getElementById("error").style.display = 'none';
-    }
     items.forEach(item =>{
       let itemHtml = displayElement(item);
     main.innerHTML += itemHtml; // penser à l'afficher dans le main
     });
-
   })
+  .catch(error => {  // Affiche un message d'erreur à l'utilisateur en cas de problème de chargement de l'API
+    document.getElementById('main').innerHTML = "<p class='col mx-auto' id='error'>Erreur lors du chargement de l'API, veuillez recommencer</p>";
+  });
+
   // afficher chaque produit dans des balises cards
   function displayElement (item) {
     let itemHtml = `<div class="card w-50 h-75 my-4 pt-5 mx-auto">
@@ -27,4 +27,3 @@ fetch("http://localhost:3000/api/teddies/")
                       </div>`
                       return itemHtml;
   }
-
