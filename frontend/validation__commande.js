@@ -11,6 +11,7 @@ productOrder.forEach(element =>{
     let elementHtml = displayElement(element);
     document.getElementById("cardOrder").innerHTML += elementHtml;
   });
+contactInfo(userOrder);
 
 // afficher chaque produit de la commande validé dans des balises cards
 function displayElement (element) {
@@ -23,13 +24,15 @@ function displayElement (element) {
                           <p>${element.price/100} euros</p>
                         </div>
                     </div>`
-                    return elementHtml}
-
+return elementHtml};
 
 // Résumé des infos de contact de l'utlisateur
+function contactInfo (userOrder){
 let contactOrder = userOrder.contact;
 document.getElementById("lastNameOrder").innerHTML = contactOrder.lastName;
 document.getElementById("firstNameOrder").innerHTML = contactOrder.firstName;
 document.getElementById("adressOrder").innerHTML = contactOrder.address;
 document.getElementById("cityOrder").innerHTML = contactOrder.city;
 document.getElementById("emailOrder").innerHTML = contactOrder.email;
+};
+
