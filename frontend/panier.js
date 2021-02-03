@@ -3,7 +3,7 @@ let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.ge
 
 //déclaration du array product pour le fetch POST
 let products = [];
-userPanier.forEach (produit => {
+userPanier.forEach(produit => {
   products.push(produit.productId);
 });
 
@@ -15,13 +15,7 @@ let formAdresse;
 let formAdresseComp;
 let formVille;
 
-let contact = {
-  firstName: formNom,
-  lastName: formPrenom,
-  address: formAdresse,
-  city: formVille,
-  email: formMail
-};
+let contact;
 
 //Controle Regex
 let checkString = /[a-zA-Z]/;
@@ -35,80 +29,71 @@ let checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
 let checkMessage = "";
 
 //fetch des données nécessaires
-if(userPanier.length > 0){
-userPanier.forEach((produit,index)=>{
-  fetch("http://localhost:3000/api/teddies/" + produit.productId) // le productId n'est récup que ligne 6
-    
-    .then(response => response.json())
-    .then (teddie =>{
-      teddie.option = produit.option;
-      produit.price = teddie.price; 
-      tableCreator(teddie, index);})
-    });  
+if (userPanier.length > 0) {
+  userPanier.forEach((produit, index) => {
+    fetch("http://localhost:3000/api/teddies/" + produit.productId) // le productId n'est récup que ligne 6
+      .then(response => response.json())
+      .then(teddie => {
+        teddie.option = produit.option;
+        produit.price = teddie.price;
+        tableCreator(teddie, index);
+      })
+  });
   sumTable(userPanier);
   clearPanier();
-  }else{
-    errorBasket();
-  };
-let inputValidation = document.getElementById("validationBtn");
-if (inputValidation) { // check si le bouton de validation est bien présent et donc ne renvoie pas null
-  inputValidation.addEventListener("click", () => {
-    checkInput();
-    if (checkMessage != "") {
-      alert("Attention :" + "\n" + checkMessage);
-      return null
-    }
-    else {
-      validationBasket(contact);
-    };
-  });
+} else {
+  errorBasket();
 };
+inputValidation();
+
 
 // creation du tableau pour chaque element du userPanier
-function tableCreator (element, index) {
-  
-  document.getElementById("basket_tablebody").innerHTML += "<tr id='basketProduct"+index+"'></tr>";
-  document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.name +"</td>";
-  document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.option +"</td>";
-  document.getElementById("basketProduct"+index).innerHTML += "<td>"+ element.price/100+"€</td>";// += pour rajouter
+function tableCreator(element, index) {
+
+  document.getElementById("basket_tablebody").innerHTML += "<tr id='basketProduct" + index + "'></tr>";
+  document.getElementById("basketProduct" + index).innerHTML += "<td>" + element.name + "</td>";
+  document.getElementById("basketProduct" + index).innerHTML += "<td>" + element.option + "</td>";
+  document.getElementById("basketProduct" + index).innerHTML += "<td>" + element.price / 100 + "€</td>";// += pour rajouter
 };
 
 // creation de la colonne Total
-function sumTable (panier) {
+function sumTable(panier) {
   let total = 0;
   panier.forEach(element => {
     total = element.productPrice + total;
   });
-  total = total /100;
-  sessionStorage.setItem('total',total);
-  document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : '+total+'€</td>';
-  // le retour null de la fonction était du à la position au départ du script dans le HTML
+  total = total / 100;
+  sessionStorage.setItem('total', total);
+  document.getElementById("basket_footer").innerHTML += '<td colspan="3"> Total de la commande : ' + total + '€</td>';
 };
 
 // creation d'un bouton pour vider le userPanier et refresh
-function clearPanier (){
+function clearPanier() {
   //mettre au panier au click de l'utilisateur
   let inputClear = document.getElementById("facture");
   inputClear.innerHTML += '<div class="btn btn-primary mx-5 my-3" id="clear_basket">Vider votre panier</div>';
   document.getElementById("clear_basket").addEventListener("click", () => {
-  localStorage.clear();
-  document.location.reload(true);
+    let confirmation = confirm("Êtes-vous sûr de vouloir supprimer votre commande ?");
+    if (confirmation == true) {
+      localStorage.clear();
+      document.location.reload(true)
+    };
   });
 };
 
 //Test du nom => aucun chiffre ou charactère spécial permis
-function checkLastName (){
+function checkLastName() {
   formNom = document.getElementById("inputLastName").value;
 
-    if(checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true){
-       checkMessage += "\n" + "Nom de famille invalide, vérifier votre nom de famille";
-    }else if(formNom == ""){
-      checkMessage += "\n" + "Renseigner votre nom de famille afin de valider la commande";
-    }
+  if (checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true) {
+    checkMessage += "\n" + "Nom de famille invalide, vérifier votre nom de famille";
+  } else if (formNom == "") {
+    checkMessage += "\n" + "Renseigner votre nom de famille afin de valider la commande";
+  }
 };
 
 //Test du prenom => aucun chiffre ou charactère spécial permis
-function checkFirstName (){
+function checkFirstName() {
   formPrenom = document.getElementById("inputFirstName").value;
   if (checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true) {
     checkMessage += "\n" + "Prénom invalide, vérifier votre prénom";
@@ -118,7 +103,7 @@ function checkFirstName (){
 };
 
 //Test du mail selon le regex de la source L256
-function checkEmail (){
+function checkEmail() {
   formMail = document.getElementById("inputMail").value;
   if (formMail == "") {
     checkMessage += "\n" + "Renseigner votre adresse mail afin de valider la commande";
@@ -128,7 +113,7 @@ function checkEmail (){
 };
 
 //Test de l'adresse => l'adresse ne contient pas obligatoirement un numéro de rue mais n'a pas de characteres spéciaux
-function checkAdress(){  
+function checkAdress() {
   formAdresse = document.getElementById("inputAdress").value;
   if (checkSpecialCharacter.test(formAdresse) == true) {
     checkMessage += "\n" + "adresse invalide, vérifier votre adresse";
@@ -138,15 +123,15 @@ function checkAdress(){
 };
 
 //Test du complément d'adresse => le complement peut être vide mais n'a pas de characteres spéciaux
-function checkCompAdress(){
+function checkCompAdress() {
   formAdresseComp = document.getElementById("inputAdressComp").value;
-  if (checkSpecialCharacter.test(formAdresseComp) == true){
-    checkMessage += "\n" + "Complément d'adresse invalide, vérifier votre complément d'adresse" 
+  if (checkSpecialCharacter.test(formAdresseComp) == true) {
+    checkMessage += "\n" + "Complément d'adresse invalide, vérifier votre complément d'adresse"
   }
 };
 
 //Test de la ville => aucune ville en France ne comporte de chiffre ou charactères spéciaux
-function checkCity (){
+function checkCity() {
   formVille = document.getElementById("inputCity").value;
   if (checkSpecialCharacter.test(formVille) == true || checkNumber.test(formVille) == true) {
     checkMessage += "\n" + "Ville invalide, vérifier votre ville"
@@ -155,14 +140,21 @@ function checkCity (){
   }
 };
 
-//vérifie si tout les formulaires passent leurs tests
-function checkInput(){
+//vérifie si tout les formulaires passent leurs tests et créer la classe contact
+function checkInput() {
   checkLastName();
   checkFirstName();
   checkEmail();
   checkAdress();
   checkCompAdress();
   checkCity();
+  contact = {
+    firstName: formNom,
+    lastName: formPrenom,
+    address: formAdresse,
+    city: formVille,
+    email: formMail
+  };
 };
 
 // Validation et fetch de la commande
@@ -180,8 +172,25 @@ function validationBasket(contact) {
 };
 
 // Si le panier est vide
-function errorBasket (){
-  document.getElementById("main").innerHTML ='<p>Votre panier est vide pour le moment.</p>';
+function errorBasket() {
+  document.getElementById("main").innerHTML = '<p>Votre panier est vide pour le moment.</p>';
   document.getElementById("main").style.textAlign = "center";
   document.getElementById("main").style.fontSize = "2rem";
 };
+
+// Active l'alerte au clic du bouton "Valider votre commande"
+function inputValidation() {
+  let inputValidation = document.getElementById("validationBtn");
+  if (inputValidation) { // check si le bouton de validation est bien présent et donc ne renvoie pas null
+    inputValidation.addEventListener("click", () => {
+      checkInput();
+      if (checkMessage != "") {
+        alert("Attention :" + "\n" + checkMessage);
+        checkMessage = "";
+      }
+      else {
+        validationBasket(contact);
+      };
+    });
+  };
+}
