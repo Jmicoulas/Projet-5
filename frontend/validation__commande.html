@@ -25,34 +25,29 @@
       </ul>
     </div>
   </nav>
-  <div id="main">
-    <div class="jumbotron">
-      <h1 class="display-6">Merci pour votre commande sur Orinoco!</h1>
-      <p>Récapitulatif de la commande n°<span id="orderNmb"></span></p>
-      <div class="card-group" id="cardOrder">
+  <div id="main_valid">
+    <h1>Merci pour votre commande sur Orinoco!</h1>
+    <p>Récapitulatif de la commande n°<span id="orderNmb"></span></p>
+    <div class="row" id="cardOrder">
+
+    </div>
+    <p>Pour un Total de <span id="orderTotal"></span> €</p>
+    <div class="row">
+      <div class="col-4">
+        <p>Votre adresse de livraison est la suivante :</p>
       </div>
-      <div class="row">
-        <div class="col-3">
-          <p>Pour un Total de <span id="orderTotal"></span> €</p>
-        </div>
+      <div class="col-4">
+        <p>Nom : <span id="lastNameOrder"></span></p>
+        <p>Adresse : <span id="adressOrder"></span></p>
       </div>
-      <div class="row">
-        <div class="col-3">
-          <p>Votre adresse de livraison est la suivante : </p>
-        </div>
-        <div class="col-4">
-          <p>Nom : <span id="lastNameOrder"></span></p>
-          <p>Adresse : <span id="adressOrder"></span></p>
-        </div>
-        <div class="col-4">
-          <p>Prénom : <span id="firstNameOrder"></span></p>
-          <p>Ville : <span id="cityOrder"></span></p>
-        </div>
+      <div class="col-4">
+        <p>Prénom : <span id="firstNameOrder"></span></p>
+        <p>Ville : <span id="cityOrder"></span></p>
       </div>
-      <div class="row">
-        <p>Une confirmation de votre commande vous sera envoyé à l'adresse mail suivante : <span id="emailOrder"></span>
-        </p>
-      </div>
+    </div>
+    <div class="row">
+      <p>Une confirmation de votre commande vous sera envoyé à l'adresse mail suivante : <span id="emailOrder"></span>
+      </p>
     </div>
   </div>
   <footer class="text-center font-weight-bold">

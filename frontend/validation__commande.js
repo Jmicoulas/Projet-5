@@ -15,14 +15,10 @@ contactInfo(userOrder);
 
 // afficher chaque produit de la commande validé dans des balises cards
 function displayElement(element) {
-  let elementHtml = `<div class="card" id="card__Confirm">
-                        <div>
-                          <img src="${element.imageUrl}" class="card-img-top" alt="image du produit">
-                        </div>
-                        <div class="card-body">
-                          <h2>${element.name}</h2>
-                          <p>${element.price / 100} euros</p>
-                        </div>
+  let elementHtml = `<div class=" col-2 border border-danger m-2 " id="order_full">
+                      <img src="${element.imageUrl}" class="img-fluid" alt="image du produit">
+                      <p>${element.name}</p>
+                      <p>${element.price / 100} euros</p>
                     </div>`
   return elementHtml
 };
@@ -36,4 +32,3 @@ function contactInfo(userOrder) {
   document.getElementById("cityOrder").innerHTML = contactOrder.city;
   document.getElementById("emailOrder").innerHTML = contactOrder.email;
 };
-

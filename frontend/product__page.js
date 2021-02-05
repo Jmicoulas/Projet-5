@@ -1,5 +1,6 @@
 // On récupère se qu'il y a dans le localstorage ou on crée un array vide
-let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.getItem("userPanier")) : [];
+let userPanier = localStorage.getItem("userPanier") ? JSON.parse(localStorage.getItem("userPanier")) : []; // ternaire pour récupérer ou initialisé userPanier dans le localStorage
+//web service
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let productId = urlParams.get('id');

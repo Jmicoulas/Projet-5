@@ -18,12 +18,12 @@ let formVille;
 let contact;
 
 //Controle Regex
-let checkString = /[a-zA-Z]/;
-let checkNumber = /[0-9]/;
+const checkString = /[a-zA-Z]/;
+const checkNumber = /[0-9]/;
 
 //Source pour vérification email => emailregex.com
-let checkMail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/y;
-let checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
+const checkMail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/y;
+const checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
 
 //message fin de controle
 let checkMessage = "";
@@ -84,7 +84,6 @@ function clearPanier() {
 //Test du nom => aucun chiffre ou charactère spécial permis
 function checkLastName() {
   formNom = document.getElementById("inputLastName").value;
-
   if (checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true) {
     checkMessage += "\n" + "Nom de famille invalide, vérifier votre nom de famille";
   } else if (formNom == "") {
@@ -193,4 +192,4 @@ function inputValidation() {
       };
     });
   };
-}
+};
